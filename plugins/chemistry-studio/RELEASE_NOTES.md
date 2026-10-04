@@ -1,3 +1,59 @@
+# Chemistry Studio 2.5.11
+
+The bond-edit gate can audit recorded reactions, not only checked routes, and route search keeps up
+with a much larger reaction index.
+
+## Recorded reactions: omitted by-products (opt-in)
+A recorded reaction usually lists only its main product. `skeletonChange(…, { omittedByproducts: true })`
+lets whole carbon fragments of the left side leave as unlisted by-products — a Boc group, an ester's
+alkoxy carbon, the CO2 of a decarboxylation (through a cut bond, which is not counted as a skeletal
+shift) — while what remains must still be a sound edit. Carbons never arrive from nowhere. In this mode
+the reading with the fewest bond changes wins, so a record that lists its solvents is not explained by
+dropping the starting material and building the product from solvent fragments. Choosing what departs
+is charged to the search budget and pruned to totals that can be reached, so a large molecule ends as
+"unchecked" instead of searching for minutes. Off by default: a checked route's steps are balanced, so
+a missing carbon there is still reported, and route checking is unchanged.
+
+## Audit flags on recorded reactions
+A reaction index built with the audit lists the records it flagged but kept (`audit-flags.tsv.zst`:
+a record has no prose, so a real rearrangement cannot be declared and looks like a flagged one).
+Precedent results — exact matches, the closest recorded reaction, recorded preparations and recorded
+disconnections — now carry their `auditFlags`.
+
+## Route search on a large index
+Retro templates are screened by pattern fingerprint before any substructure search (a template can
+only match a molecule holding all of its fingerprint bits), and table lookups find each wanted row
+in its frame directly instead of splitting the frame. Both leave results unchanged; with a 9× larger
+template set a one-step disconnection stays well inside route search's time budget.
+
+# Chemistry Studio 2.5.10
+
+The route checker now reads each balanced step as a bond edit, not only an atom count.
+
+## Which bonds a step makes and breaks
+After balance and continuity, each step is read as a graph edit: the carbon skeletons of both
+sides are mapped (spectator fragments set aside, the fewest reactant C–C bonds broken to fit), then
+extended to heteroatoms, giving a per-step ledger of bonds made (+) and broken (−) by element pair.
+
+A step is refused — unless its prose declares a rearrangement, or a radical / C–H functionalisation
+— when a carbon migrates (a 1,2-shift), a new C–C or C–heteroatom bond forms at a carbon nothing
+activates (no charge, radical, multiple bond, heteroatom, leaving group or metal on it, and not next
+to a carbonyl, alkene or arene), or a C–C bond breaks while its two carbons stay joined in the
+product. The refusal names what to check; a passing step keeps its bond ledger for the report. Over
+183 already-verified routes this refused no correctly described reaction and caught five balanced but
+impossible ones.
+
+New optional `rearrangement` and `radical` route inputs; new `skeleton` and `bonds` fields per step.
+
+## A covalent metal oxide is one species
+Chromium trioxide, osmium tetroxide and the like, returned by a reference as bare ions
+(`[Cr+6].[O-2].[O-2].[O-2]`), now resolve to the covalent oxide, so a balance reads `CrO3`, not loose
+`Cr` and `O` atoms.
+
+Earlier 2.5.7–2.5.9 iterations (the carbon-packing escape for convergent couplings) are folded in.
+
+---
+
 # Chemistry Studio 2.5.6
 
 A new tool. Nothing a route already reported as verified changes.
