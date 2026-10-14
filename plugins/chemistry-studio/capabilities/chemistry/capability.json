@@ -4,8 +4,18 @@
   "provides": "nodus:chemistry",
   "version": "2.7.0",
   "description": "Resolve chemical identities against references, validate the structure, draw it as a verified document, and check a step against known reactions.",
-  "runtime": { "kind": "nodus-trusted-worker-v1", "protocol": 1, "entry": "worker.js" },
-  "requires": [{ "id": "nodus:svg", "minVersion": "1.0.0", "maxVersionExclusive": "2.0.0" }],
+  "runtime": {
+    "kind": "nodus-trusted-worker-v1",
+    "protocol": 1,
+    "entry": "worker.js"
+  },
+  "requires": [
+    {
+      "id": "nodus:svg",
+      "minVersion": "1.0.0",
+      "maxVersionExclusive": "2.0.0"
+    }
+  ],
   "tools": [
     {
       "id": "compile",
@@ -13,16 +23,37 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "plan": { "type": "string", "minLength": 2, "maxLength": 64000 },
-          "question": { "type": "string", "maxLength": 64000 },
-          "pubchemDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "opsinDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "localOnly": { "type": "boolean" }
+          "plan": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 64000
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 64000
+          },
+          "pubchemDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "opsinDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "localOnly": {
+            "type": "boolean"
+          }
         },
-        "required": ["plan"],
+        "required": [
+          "plan"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["chemistry-document"],
+      "artifactTypes": [
+        "chemistry-document"
+      ],
       "timeoutMs": 180000,
       "concurrency": 2,
       "maxPerReply": 1,
@@ -35,12 +66,25 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "smiles": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 }, "minItems": 1, "maxItems": 24 }
+          "smiles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "minItems": 1,
+            "maxItems": 24
+          }
         },
-        "required": ["smiles"],
+        "required": [
+          "smiles"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["molecule-dossier"],
+      "artifactTypes": [
+        "molecule-dossier"
+      ],
       "timeoutMs": 120000,
       "concurrency": 2,
       "maxPerReply": 4,
@@ -54,15 +98,38 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "names": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 }, "minItems": 1, "maxItems": 512 },
-          "pubchemDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "opsinDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "localOnly": { "type": "boolean" }
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "minItems": 1,
+            "maxItems": 512
+          },
+          "pubchemDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "opsinDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "localOnly": {
+            "type": "boolean"
+          }
         },
-        "required": ["names"],
+        "required": [
+          "names"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["species-resolution"],
+      "artifactTypes": [
+        "species-resolution"
+      ],
       "timeoutMs": 180000,
       "concurrency": 1,
       "maxPerReply": 2,
@@ -76,14 +143,33 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "smiles": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 }, "minItems": 1, "maxItems": 512 },
-          "pubchemDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "localOnly": { "type": "boolean" }
+          "smiles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "minItems": 1,
+            "maxItems": 512
+          },
+          "pubchemDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "localOnly": {
+            "type": "boolean"
+          }
         },
-        "required": ["smiles"],
+        "required": [
+          "smiles"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["structure-naming"],
+      "artifactTypes": [
+        "structure-naming"
+      ],
       "timeoutMs": 180000,
       "concurrency": 1,
       "maxPerReply": 2,
@@ -97,16 +183,62 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "steps": { "type": "array", "items": { "type": "string", "minLength": 3, "maxLength": 64000 }, "minItems": 1, "maxItems": 512 },
-          "carriers": { "type": "array", "items": { "type": "string", "maxLength": 4000 }, "maxItems": 512 },
-          "racemic": { "type": "boolean" },
-          "rearrangement": { "type": "array", "items": { "type": "boolean" }, "maxItems": 512 },
-          "radical": { "type": "array", "items": { "type": "boolean" }, "maxItems": 512 },
-          "target": { "type": "string", "minLength": 1, "maxLength": 2000 },
-          "enumerateStereo": { "type": "boolean" },
-          "pubchemDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "opsinDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "localOnly": { "type": "boolean" },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 64000
+            },
+            "minItems": 1,
+            "maxItems": 512
+          },
+          "carriers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "maxItems": 512
+          },
+          "racemic": {
+            "type": "boolean"
+          },
+          "rearrangement": {
+            "type": "array",
+            "items": {
+              "type": "boolean"
+            },
+            "maxItems": 512
+          },
+          "radical": {
+            "type": "array",
+            "items": {
+              "type": "boolean"
+            },
+            "maxItems": 512
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "enumerateStereo": {
+            "type": "boolean"
+          },
+          "pubchemDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "opsinDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "localOnly": {
+            "type": "boolean"
+          },
           "labels": {
             "type": "array",
             "maxItems": 512,
@@ -116,21 +248,46 @@
               "items": {
                 "type": "object",
                 "properties": {
-                  "role": { "type": "string", "enum": ["reactant", "product", "agent"] },
-                  "byproduct": { "type": "boolean" },
-                  "name": { "type": "string", "minLength": 1, "maxLength": 4000 },
-                  "smiles": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "reactant",
+                      "product",
+                      "agent"
+                    ]
+                  },
+                  "byproduct": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "smiles": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  }
                 },
-                "required": ["role", "name", "smiles"],
+                "required": [
+                  "role",
+                  "name",
+                  "smiles"
+                ],
                 "additionalProperties": false
               }
             }
           }
         },
-        "required": ["steps"],
+        "required": [
+          "steps"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["route-audit"],
+      "artifactTypes": [
+        "route-audit"
+      ],
       "timeoutMs": 180000,
       "concurrency": 1,
       "maxPerReply": 1,
@@ -194,15 +351,47 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "indexDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "reactions": { "type": "array", "items": { "type": "string", "minLength": 3, "maxLength": 4000 }, "maxItems": 32 },
-          "products": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "maxItems": 32 },
-          "similar": { "type": "array", "items": { "type": "string", "minLength": 3, "maxLength": 4000 }, "maxItems": 16 }
+          "indexDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "reactions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 4000
+            },
+            "maxItems": 32
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "maxItems": 32
+          },
+          "similar": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 4000
+            },
+            "maxItems": 16
+          }
         },
-        "required": ["indexDir"],
+        "required": [
+          "indexDir"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["reaction-precedent"],
+      "artifactTypes": [
+        "reaction-precedent"
+      ],
       "timeoutMs": 300000,
       "concurrency": 2,
       "maxPerReply": 1,
@@ -216,19 +405,99 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "indexDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "targets": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "minItems": 1, "maxItems": 16 },
-          "startingMaterials": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "maxItems": 16 },
-          "limit": { "type": "integer", "minimum": 1, "maximum": 32 },
-          "stockDir": { "type": "string", "minLength": 1, "maxLength": 4096 }
+          "indexDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "minItems": 1,
+            "maxItems": 16
+          },
+          "startingMaterials": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "maxItems": 16
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "stockDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
         },
-        "required": ["indexDir", "targets"],
+        "required": [
+          "indexDir",
+          "targets"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["reaction-disconnections"],
+      "artifactTypes": [
+        "reaction-disconnections"
+      ],
       "timeoutMs": 300000,
       "concurrency": 4,
       "maxPerReply": 1,
+      "answerMode": "replace-block",
+      "metered": false,
+      "billing": "none"
+    },
+    {
+      "id": "propose-forward-steps",
+      "description": "The forward transformations that APPLY to a molecule, each with the product it gives and how often it is recorded. Ask for this when you know what you want to do to a molecule and want the transformations the recorded chemistry supports, rather than proposing one yourself. An empty list means the index supports none, which is an answer. Apply the one you choose with execute-route-program, passing its smarts.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "molecule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "reagents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "maxItems": 4
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 25
+          },
+          "indexDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "molecule"
+        ],
+        "additionalProperties": false
+      },
+      "artifactTypes": [
+        "forward-steps"
+      ],
+      "timeoutMs": 60000,
+      "concurrency": 1,
+      "maxPerReply": 4,
       "answerMode": "replace-block",
       "metered": false,
       "billing": "none"
@@ -239,13 +508,30 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "targets": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "minItems": 1, "maxItems": 8 },
-          "monomerDir": { "type": "string", "minLength": 1, "maxLength": 4096 }
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "minItems": 1,
+            "maxItems": 8
+          },
+          "monomerDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
         },
-        "required": ["targets"],
+        "required": [
+          "targets"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["target-decomposition"],
+      "artifactTypes": [
+        "target-decomposition"
+      ],
       "timeoutMs": 60000,
       "concurrency": 4,
       "maxPerReply": 1,
@@ -259,13 +545,31 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "stockDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "molecules": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "minItems": 1, "maxItems": 64 }
+          "stockDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "molecules": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "minItems": 1,
+            "maxItems": 64
+          }
         },
-        "required": ["stockDir", "molecules"],
+        "required": [
+          "stockDir",
+          "molecules"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["stock-availability"],
+      "artifactTypes": [
+        "stock-availability"
+      ],
       "timeoutMs": 120000,
       "concurrency": 2,
       "maxPerReply": 1,
@@ -279,17 +583,55 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "indexDirs": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4096 }, "minItems": 1, "maxItems": 4 },
-          "target": { "type": "string", "minLength": 1, "maxLength": 2000 },
-          "startingMaterials": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "maxItems": 16 },
-          "maxSteps": { "type": "integer", "minimum": 1, "maximum": 6 },
-          "stockDir": { "type": "string", "minLength": 1, "maxLength": 4096 },
-          "budgetSeconds": { "type": "integer", "minimum": 5, "maximum": 240 }
+          "indexDirs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "minItems": 1,
+            "maxItems": 4
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "startingMaterials": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "maxItems": 16
+          },
+          "maxSteps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "stockDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "budgetSeconds": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 240
+          }
         },
-        "required": ["indexDirs", "target"],
+        "required": [
+          "indexDirs",
+          "target"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["candidate-routes"],
+      "artifactTypes": [
+        "candidate-routes"
+      ],
       "timeoutMs": 300000,
       "concurrency": 1,
       "maxPerReply": 1,
@@ -310,20 +652,50 @@
             "items": {
               "type": "object",
               "properties": {
-                "reactants": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "maxItems": 12 },
-                "products": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 2000 }, "maxItems": 12 },
-                "reagents": { "type": "string", "maxLength": 2000 }
+                "reactants": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  },
+                  "maxItems": 12
+                },
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  },
+                  "maxItems": 12
+                },
+                "reagents": {
+                  "type": "string",
+                  "maxLength": 2000
+                }
               },
-              "required": ["reactants", "products"],
+              "required": [
+                "reactants",
+                "products"
+              ],
               "additionalProperties": false
             }
           },
-          "textbookDir": { "type": "string", "minLength": 1, "maxLength": 4096 }
+          "textbookDir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
         },
-        "required": ["steps"],
+        "required": [
+          "steps"
+        ],
         "additionalProperties": false
       },
-      "artifactTypes": ["step-compatibility"],
+      "artifactTypes": [
+        "step-compatibility"
+      ],
       "timeoutMs": 120000,
       "concurrency": 1,
       "maxPerReply": 1,
@@ -335,96 +707,290 @@
   "chat": {
     "priority": 300,
     "requestProtocols": [
-      { "fence": "chemistry-plan", "toolId": "compile", "maxPerReply": 1, "answerMode": "replace-block" }
+      {
+        "fence": "chemistry-plan",
+        "toolId": "compile",
+        "maxPerReply": 1,
+        "answerMode": "replace-block"
+      },
+      {
+        "fence": "forward-steps",
+        "toolId": "propose-forward-steps",
+        "maxPerReply": 4,
+        "answerMode": "replace-block"
+      }
     ],
     "legacyResults": [
-      { "fence": "chemistry-document", "artifactType": "chemistry-document", "artifactVersion": 2 },
-      { "fence": "chemistry-notice", "artifactType": "chemistry-document", "artifactVersion": 2 }
+      {
+        "fence": "chemistry-document",
+        "artifactType": "chemistry-document",
+        "artifactVersion": 2
+      },
+      {
+        "fence": "chemistry-notice",
+        "artifactType": "chemistry-document",
+        "artifactVersion": 2
+      }
     ],
-    "hooks": { "prepare": true },
-    "pendingLabel": { "en": "Drawing your structure…", "es": "Dibujando tu estructura…", "fr": "Dessin de votre structure…", "de": "Struktur wird gezeichnet…", "pt": "A desenhar a tua estrutura…", "pt-BR": "Desenhando sua estrutura…", "it": "Disegno della struttura…", "tr": "Yapınız çiziliyor…" }
+    "hooks": {
+      "prepare": true
+    },
+    "pendingLabel": {
+      "en": "Drawing your structure…",
+      "es": "Dibujando tu estructura…",
+      "fr": "Dessin de votre structure…",
+      "de": "Struktur wird gezeichnet…",
+      "pt": "A desenhar a tua estrutura…",
+      "pt-BR": "Desenhando sua estrutura…",
+      "it": "Disegno della struttura…",
+      "tr": "Yapınız çiziliyor…"
+    }
   },
   "artifacts": [
     {
       "type": "chemistry-document",
       "version": 2,
-      "label": { "en": "Chemistry document", "es": "Documento de química", "fr": "Document de chimie", "de": "Chemie-Dokument", "pt": "Documento de química", "pt-BR": "Documento de química", "it": "Documento di chimica", "tr": "Kimya belgesi" },
+      "label": {
+        "en": "Chemistry document",
+        "es": "Documento de química",
+        "fr": "Document de chimie",
+        "de": "Chemie-Dokument",
+        "pt": "Documento de química",
+        "pt-BR": "Documento de química",
+        "it": "Documento di chimica",
+        "tr": "Kimya belgesi"
+      },
       "modelVisibility": "projection",
-      "decodes": ["chemfig", "smiles", "lewis"]
+      "decodes": [
+        "chemfig",
+        "smiles",
+        "lewis"
+      ]
     },
     {
       "type": "molecule-dossier",
       "version": 1,
-      "label": { "en": "Molecule dossier", "es": "Ficha molecular", "fr": "Fiche moléculaire", "de": "Molekül-Dossier", "pt": "Ficha molecular", "pt-BR": "Ficha molecular", "it": "Scheda molecolare", "tr": "Molekül dosyası" },
+      "label": {
+        "en": "Molecule dossier",
+        "es": "Ficha molecular",
+        "fr": "Fiche moléculaire",
+        "de": "Molekül-Dossier",
+        "pt": "Ficha molecular",
+        "pt-BR": "Ficha molecular",
+        "it": "Scheda molecolare",
+        "tr": "Molekül dosyası"
+      },
       "modelVisibility": "projection"
     },
     {
       "type": "route-audit",
       "version": 1,
-      "label": { "en": "Route audit", "es": "Auditoría de ruta", "fr": "Audit de voie", "de": "Routenprüfung", "pt": "Auditoria de rota", "pt-BR": "Auditoria de rota", "it": "Audit di via", "tr": "Rota denetimi" },
+      "label": {
+        "en": "Route audit",
+        "es": "Auditoría de ruta",
+        "fr": "Audit de voie",
+        "de": "Routenprüfung",
+        "pt": "Auditoria de rota",
+        "pt-BR": "Auditoria de rota",
+        "it": "Audit di via",
+        "tr": "Rota denetimi"
+      },
       "modelVisibility": "projection"
     },
     {
       "type": "species-resolution",
       "version": 1,
-      "label": { "en": "Species resolution", "es": "Resolución de especies", "fr": "Résolution des espèces", "de": "Spezies-Auflösung", "pt": "Resolução de espécies", "pt-BR": "Resolução de espécies", "it": "Risoluzione delle specie", "tr": "Tür çözümlemesi" },
+      "label": {
+        "en": "Species resolution",
+        "es": "Resolución de especies",
+        "fr": "Résolution des espèces",
+        "de": "Spezies-Auflösung",
+        "pt": "Resolução de espécies",
+        "pt-BR": "Resolução de espécies",
+        "it": "Risoluzione delle specie",
+        "tr": "Tür çözümlemesi"
+      },
       "modelVisibility": "projection"
     },
     {
       "type": "structure-naming",
       "version": 1,
-      "label": { "en": "Structure naming", "es": "Nombrado de estructuras", "fr": "Nommage des structures", "de": "Struktur-Benennung", "pt": "Nomeação de estruturas", "pt-BR": "Nomeação de estruturas", "it": "Denominazione delle strutture", "tr": "Yapı adlandırma" },
+      "label": {
+        "en": "Structure naming",
+        "es": "Nombrado de estructuras",
+        "fr": "Nommage des structures",
+        "de": "Struktur-Benennung",
+        "pt": "Nomeação de estruturas",
+        "pt-BR": "Nomeação de estruturas",
+        "it": "Denominazione delle strutture",
+        "tr": "Yapı adlandırma"
+      },
       "modelVisibility": "projection"
     },
     {
       "type": "reaction-precedent",
       "version": 1,
-      "label": { "en": "Reaction precedent", "es": "Precedente de reacción", "fr": "Précédent de réaction", "de": "Reaktionspräzedenz", "pt": "Precedente de reação", "pt-BR": "Precedente de reação", "it": "Precedente di reazione", "tr": "Reaksiyon örneği" },
+      "label": {
+        "en": "Reaction precedent",
+        "es": "Precedente de reacción",
+        "fr": "Précédent de réaction",
+        "de": "Reaktionspräzedenz",
+        "pt": "Precedente de reação",
+        "pt-BR": "Precedente de reação",
+        "it": "Precedente di reazione",
+        "tr": "Reaksiyon örneği"
+      },
       "modelVisibility": "none"
     },
     {
       "type": "reaction-disconnections",
       "version": 1,
-      "label": { "en": "Reaction disconnections", "es": "Desconexiones de reacción", "fr": "Déconnexions de réaction", "de": "Reaktionsdiskonnektionen", "pt": "Desconexões de reação", "pt-BR": "Desconexões de reação", "it": "Disconnessioni di reazione", "tr": "Reaksiyon ayrıştırmaları" },
+      "label": {
+        "en": "Reaction disconnections",
+        "es": "Desconexiones de reacción",
+        "fr": "Déconnexions de réaction",
+        "de": "Reaktionsdiskonnektionen",
+        "pt": "Desconexões de reação",
+        "pt-BR": "Desconexões de reação",
+        "it": "Disconnessioni di reazione",
+        "tr": "Reaksiyon ayrıştırmaları"
+      },
       "modelVisibility": "none"
     },
     {
       "type": "target-decomposition",
       "version": 1,
-      "label": { "en": "Target decomposition", "es": "Descomposición del objetivo", "fr": "Décomposition de la cible", "de": "Zielzerlegung", "pt": "Decomposição do alvo", "pt-BR": "Decomposição do alvo", "it": "Scomposizione del bersaglio", "tr": "Hedef ayrıştırması" },
+      "label": {
+        "en": "Target decomposition",
+        "es": "Descomposición del objetivo",
+        "fr": "Décomposition de la cible",
+        "de": "Zielzerlegung",
+        "pt": "Decomposição do alvo",
+        "pt-BR": "Decomposição do alvo",
+        "it": "Scomposizione del bersaglio",
+        "tr": "Hedef ayrıştırması"
+      },
       "modelVisibility": "none"
     },
     {
       "type": "stock-availability",
       "version": 1,
-      "label": { "en": "Stock availability", "es": "Disponibilidad en catálogo", "fr": "Disponibilité en stock", "de": "Lagerverfügbarkeit", "pt": "Disponibilidade em stock", "pt-BR": "Disponibilidade em estoque", "it": "Disponibilità a catalogo", "tr": "Stok durumu" },
+      "label": {
+        "en": "Stock availability",
+        "es": "Disponibilidad en catálogo",
+        "fr": "Disponibilité en stock",
+        "de": "Lagerverfügbarkeit",
+        "pt": "Disponibilidade em stock",
+        "pt-BR": "Disponibilidade em estoque",
+        "it": "Disponibilità a catalogo",
+        "tr": "Stok durumu"
+      },
       "modelVisibility": "none"
     },
     {
       "type": "candidate-routes",
       "version": 1,
-      "label": { "en": "Candidate routes", "es": "Rutas candidatas", "fr": "Voies candidates", "de": "Kandidatenrouten", "pt": "Rotas candidatas", "pt-BR": "Rotas candidatas", "it": "Vie candidate", "tr": "Aday rotalar" },
+      "label": {
+        "en": "Candidate routes",
+        "es": "Rutas candidatas",
+        "fr": "Voies candidates",
+        "de": "Kandidatenrouten",
+        "pt": "Rotas candidatas",
+        "pt-BR": "Rotas candidatas",
+        "it": "Vie candidate",
+        "tr": "Aday rotalar"
+      },
       "modelVisibility": "none"
     },
     {
       "type": "step-compatibility",
       "version": 1,
-      "label": { "en": "Functional-group compatibility", "es": "Compatibilidad de grupos funcionales", "fr": "Compatibilité des groupes fonctionnels", "de": "Verträglichkeit funktioneller Gruppen", "pt": "Compatibilidade de grupos funcionais", "pt-BR": "Compatibilidade de grupos funcionais", "it": "Compatibilità dei gruppi funzionali", "tr": "Fonksiyonel grup uyumluluğu" },
+      "label": {
+        "en": "Functional-group compatibility",
+        "es": "Compatibilidad de grupos funcionales",
+        "fr": "Compatibilité des groupes fonctionnels",
+        "de": "Verträglichkeit funktioneller Gruppen",
+        "pt": "Compatibilidade de grupos funcionais",
+        "pt-BR": "Compatibilidade de grupos funcionais",
+        "it": "Compatibilità dei gruppi funzionali",
+        "tr": "Fonksiyonel grup uyumluluğu"
+      },
       "modelVisibility": "none"
+    },
+    {
+      "type": "forward-steps",
+      "version": 1,
+      "label": {
+        "en": "Forward steps",
+        "es": "Pasos directos",
+        "fr": "Étapes directes",
+        "de": "Vorwärtsschritte",
+        "pt": "Passos diretos",
+        "pt-BR": "Passos diretos",
+        "it": "Passaggi diretti",
+        "tr": "İleri adımlar"
+      },
+      "modelVisibility": "projection"
     }
   ],
   "permissions": {
     "network": [
-      { "id": "opsin", "origin": "https://www.ebi.ac.uk", "pathPrefixes": ["/opsin/ws/"], "methods": ["GET"], "maxResponseBytes": 1048576, "timeoutMs": 30000 },
-      { "id": "pubchem", "origin": "https://pubchem.ncbi.nlm.nih.gov", "pathPrefixes": ["/rest/pug/compound/"], "methods": ["GET"], "maxResponseBytes": 4194304, "timeoutMs": 30000 },
-      { "id": "wheels", "origin": "https://files.pythonhosted.org", "pathPrefixes": ["/packages/"], "methods": ["GET"], "maxResponseBytes": 268435456, "timeoutMs": 240000 }
+      {
+        "id": "opsin",
+        "origin": "https://www.ebi.ac.uk",
+        "pathPrefixes": [
+          "/opsin/ws/"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      },
+      {
+        "id": "pubchem",
+        "origin": "https://pubchem.ncbi.nlm.nih.gov",
+        "pathPrefixes": [
+          "/rest/pug/compound/"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "maxResponseBytes": 4194304,
+        "timeoutMs": 30000
+      },
+      {
+        "id": "wheels",
+        "origin": "https://files.pythonhosted.org",
+        "pathPrefixes": [
+          "/packages/"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "maxResponseBytes": 268435456,
+        "timeoutMs": 240000
+      }
     ],
     "runtimes": [
-      { "id": "chemistry", "kind": "python", "minVersion": "3.11" }
+      {
+        "id": "chemistry",
+        "kind": "python",
+        "minVersion": "3.11"
+      }
     ],
-    "model": { "maxCalls": 2, "purpose": "Repair a structurally invalid plan, or draw an explicitly unverified fallback when the verified lane abstains." },
+    "model": {
+      "maxCalls": 2,
+      "purpose": "Repair a structurally invalid plan, or draw an explicitly unverified fallback when the verified lane abstains."
+    },
     "svg": true,
-    "subworkers": { "max": 1 },
-    "storage": { "stateBytes": 65536, "cacheBytes": 4194304, "tempBytes": 0 }
+    "subworkers": {
+      "max": 1
+    },
+    "storage": {
+      "stateBytes": 65536,
+      "cacheBytes": 4194304,
+      "tempBytes": 0
+    }
   }
 }
